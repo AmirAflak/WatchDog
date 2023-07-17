@@ -18,9 +18,9 @@ def amass(domain: str, use_docker: bool = True) -> Generator[str, None, None]:
         yield line.strip()
         
        
-domain = 'caterpillar.com'
-for line in amass(domain):
-    print(line)
+# domain = 'caterpillar.com'
+# for line in amass(domain):
+#     print(line)
 
 
 # TODO: benchmark execution with and without docker using below sample
