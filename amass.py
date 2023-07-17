@@ -25,11 +25,18 @@ amass(domain)
 # TODO: benchmark execution with and without docker using below sample
 
 # start_time = time.time()
-# for url in amass(domain):
+# for url in amass(domain, True):
 #     continue
 # end_time = time.time()
 # execution_time = end_time - start_time
-# print(f'execution time with yield: {execution_time}')
+# print(f'execution time with docker: {execution_time}')
+
+# start_time = time.time()
+# for url in amass(domain, False):
+#     continue
+# end_time = time.time()
+# execution_time = end_time - start_time
+# print(f'execution time without docker: {execution_time}')
 
 
 
