@@ -2,12 +2,12 @@
 import os
 from multiprocessing import Pool
 from typing import Generator
-from findomain import *
-from crtsh import *
-from amass import *
-from subfinder import *
-from assetfinder import *
-from crtsh_curl import *
+from sources.findomain import *
+from sources.crtsh import *
+from sources.amass import *
+from sources.subfinder import *
+from sources.assetfinder import *
+from sources.crtsh_curl import *
 
 def main() -> Generator[str, None, None]:
     pool = Pool()
