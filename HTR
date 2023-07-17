@@ -1,0 +1,15 @@
+1. make a directory ==> mkdir test
+
+2. make a domains.txt file ==> touch domains.txt
+
+3. append these domains to the domains.txt file
+################
+cat.com
+ikea.com
+ubisoft.com
+caterpillar.com 
+################
+
+4. in the test directory make a dir with the name of subdomains ==> mkdir subdomains
+
+5. in the subdomains directory run ==> for domain in $(cat ../domains.txt);do passive-enum.py $domain; done
