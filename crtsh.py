@@ -12,3 +12,5 @@ def crtsh(domain: str) -> Generator[str, None, None]:
 # domain = 'caterpillar.com'
 # for line in crtsh(domain):
 #     print(line)
+
+__all__ = ['crtsh']

@@ -40,7 +40,7 @@ def amass(domain: str, use_docker: bool = True) -> Generator[str, None, None]:
 # print(f'execution time without docker: {execution_time}')
 
 
-
+__all__ = ['amass']
 
 
 

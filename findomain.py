@@ -14,3 +14,5 @@ def findomain(domain: str) -> Generator[str, None, None]:
 # for line in findomain(domain):
 #     print(line)
 
+__all__ = ['findomain']
+

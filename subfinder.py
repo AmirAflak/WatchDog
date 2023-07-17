@@ -13,3 +13,5 @@ def subfinder():
 # domain = 'caterpillar.com'
 # for line in subfinder(domain):
 #     print(line)
+
+__all__ = ['subfinder']

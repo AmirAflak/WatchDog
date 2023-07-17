@@ -12,3 +12,5 @@ def assetfinder(domain: str) -> Generator[str, None, None]:
 # domain = 'caterpillar.com'
 # for line in assetfinder(domain):
 #     print(line)
+
+__all__ = ['assetfinder']
