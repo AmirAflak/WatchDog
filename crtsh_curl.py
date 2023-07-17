@@ -10,6 +10,6 @@ def command_maker(domain: str) -> Generator[str, None, None]:
         yield line.strip()
 
 
-domain = 'caterpillar.com'
-for line in command_maker(domain):
-    print(line)
+# domain = 'caterpillar.com'
+# for line in command_maker(domain):
+#     print(line)
