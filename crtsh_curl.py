@@ -1,19 +1,15 @@
 #!/usr/bin/python3
 
 import os
-import sys
+from typing import Generator
 
-domain = sys.argv[1]
 
-default_command = """curl -sk "https://crt.sh/?q=%.{0}&output=json" | tr ',' '\\n' | awk -F'"' '/name_value/ {{gsub(/\*\./, "", $4); gsub(/\\\\n/,"\\n",$4);print $4}}' | anew crtsh_curl.subs"""
+def command_maker(domain: str) -> Generator[str, None, None]:
+    command = f'curl -sk "https://crt.sh/?q=%.{domain}&output=json" | tr "," "\\n" | awk -F\'"\' \'/name_value/ {{gsub(/\\*\\./, "", $4); gsub(/\\\\n/,"\\n",$4);print $4}}\''
+    for line in os.popen(command):
+        yield line.strip()
 
-def command_maker():
-    global curl_crtsh_command
-    curl_crtsh_command = default_command.format(domain)
 
-command_maker()
-
-def curl_crtsh():
-    os.system(curl_crtsh_command)
-
-curl_crtsh()
+domain = 'caterpillar.com'
+for line in command_maker(domain):
+    print(line)
