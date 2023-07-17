@@ -2,16 +2,15 @@
 
 import os
 from typing import Generator
+from configs import DOMAIN
 
-
-def findomain(domain: str) -> Generator[str, None, None]:
-    findomain_command = f'findomain -t {domain} -q 2>/dev/null'
+def findomain() -> Generator[str, None, None]:
+    findomain_command = f'findomain -t {DOMAIN} -q 2>/dev/null'
     
     for line in os.popen(crtsh_command):
         yield line.strip()
 
-# domain = 'caterpillar.com'
-# for line in findomain(domain):
+# for line in findomain():
 #     print(line)
 
 __all__ = ['findomain']
