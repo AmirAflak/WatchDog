@@ -19,7 +19,8 @@ def amass(domain: str, use_docker: bool = True) -> Generator[str, None, None]:
         
        
 domain = 'caterpillar.com'
-amass(domain)
+for line in amass(domain):
+    print(line)
 
 
 # TODO: benchmark execution with and without docker using below sample
