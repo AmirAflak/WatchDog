@@ -1,15 +1,31 @@
-1. make a directory ==> mkdir test
+install go
+1. wget https://go.dev/dl/go1.20.6.linux-amd64.tar.gz
+2. rm -rf /usr/local/go && tar -C /usr/local -xzf go1.20.6.linux-amd64.tar.gz
+3. nano ~/.bashrc
+4. copy below text into .bashrc
+export PATH=$PATH:/usr/local/go/bin
+5. source ~/.bashrc
+6. verify it by running this command: go version
 
-2. make a domains.txt file ==> touch domains.txt
 
-3. append these domains to the domains.txt file
-################
-cat.com
-ikea.com
-ubisoft.com
-caterpillar.com 
-################
 
-4. in the test directory make a dir with the name of subdomains ==> mkdir subdomains
-
-5. in the subdomains directory run ==> for domain in $(cat ../domains.txt);do passive-enum.py $domain; done
+tools:
+pdtm (2 ways):
+1. go install -v github.com/projectdiscovery/pdtm/cmd/pdtm@latest
+2(if the first one didn't work). wget https://github.com/projectdiscovery/pdtm/releases/download/v0.0.8/pdtm_0.0.8_linux_amd64.zip
+##################
+amass:
+go install -v github.com/owasp-amass/amass/v4/...@master
+##################
+findomain:
+wget https://github.com/Findomain/Findomain/releases/download/9.0.0/findomain-linux.zip
+##################
+1. nano ~/.bashrc
+2. copy below text into ~/.bashrc
+export PATH=$PATH:/root/go/bin
+3. source ~/.bashrc
+##################
+subfinder(2 ways):
+1. pdtm -i subfinder
+2(if the first one didn't work). go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+##################
