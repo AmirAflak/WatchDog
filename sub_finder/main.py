@@ -59,6 +59,6 @@ def get_subs() -> Generator[str, None, None]:
     
 
 
-if __name__ == '__main__'
-for line in get_subs():
-    print(line)
+if __name__ == '__main__': 
+    for line in get_subs():
+        print(line)
