@@ -30,9 +30,9 @@ def findomain(use_docker: bool = True) -> Generator[str, None, None]:
         
 def subfinder(use_docker: bool = True) -> Generator[str, None, None]:
     if use_docker:
-        subfinder_command = f"docker run projectdiscovery/subfinder:latest -d {DOMAIN} -all"
+        subfinder_command = f"docker run projectdiscovery/subfinder:latest -d {DOMAIN} -all -silent"
     else:
-        subfinder_command = f"subfinder -d {DOMAIN} -all"  
+        subfinder_command = f"subfinder -d {DOMAIN} -all -silent"  
         
     for line in os.popen(subfinder_command):
         yield line.strip()
@@ -65,3 +65,4 @@ def pickle_handler(f):
 if __name__ == '__main__': 
     for line in get_subs():
         print(line)
+
