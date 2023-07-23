@@ -51,13 +51,16 @@ def get_subs() -> Generator[str, None, None]:
     
     sub_finders = [findomain, amass, subfinder, crtsh_curl]
     
-    for result in pool.imap(lambda f: list(f()), sub_finders):
+    # for result in pool.imap(lambda f: list(f()), sub_finders):
+    for result in pool.imap(pickle_handler, sub_finders):
         yield from (res for res in result if res not in seen_results and not seen_results.add(res))
     
     pool.close()
     pool.join()
     
-
+def pickle_handler(f):
+    return list(f())
+    
 
 if __name__ == '__main__': 
     for line in get_subs():
