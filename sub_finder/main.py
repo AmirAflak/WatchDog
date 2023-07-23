@@ -69,7 +69,7 @@ def get_subs() -> Generator[str, None, None]:
     
 if __name__ == '__main__': 
     start_time = time.time()
-    with open('subs.txt', 'a') as f:
+    with open('subs.txt', 'w') as f:
         for line in get_subs():
             f.write(line)
             f.write("\n")
