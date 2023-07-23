@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import os
+import time
 from multiprocessing import Pool
 from typing import Generator
 from configs import DOMAIN
@@ -67,8 +68,13 @@ def get_subs() -> Generator[str, None, None]:
     pool.join()
     
 if __name__ == '__main__': 
+    start_time = time.time()
     with open('subs.txt', 'a') as f:
         for line in get_subs():
             f.write(line)
             f.write("\n")
+    end_time = time.time()
+    execution_time = end_time - start_time
+    print(f"{execution_time=}")
+
 
