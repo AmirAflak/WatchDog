@@ -5,6 +5,8 @@ from typing import Generator
 from configs import DOMAIN
 
 
+
+
 def amass(use_docker: bool = True) -> Generator[str, None, None]:
     print("[+] amass")
     if use_docker:
@@ -29,6 +31,7 @@ def findomain(use_docker: bool = True) -> Generator[str, None, None]:
         
         
 def subfinder(use_docker: bool = True) -> Generator[str, None, None]:
+    print("[+] subfinder")
     if use_docker:
         subfinder_command = f"docker run projectdiscovery/subfinder:latest -d {DOMAIN} -all -silent"
     else:
@@ -39,9 +42,14 @@ def subfinder(use_docker: bool = True) -> Generator[str, None, None]:
     
         
 def crtsh_curl() -> Generator[str, None, None]:
+    print("[+] crtsh_curl")
     command = f'curl -sk "https://crt.sh/?q=%.{DOMAIN}&output=json" | tr "," "\\n" | awk -F\'"\' \'/name_value/ {{gsub(/\\*\\./, "", $4); gsub(/\\\\n/,"\\n",$4);print $4}}\''
     for line in os.popen(command):
         yield line.strip()
+
+
+def pickle_handler(f):
+    return list(f())
 
 
 def get_subs() -> Generator[str, None, None]:
@@ -58,11 +66,9 @@ def get_subs() -> Generator[str, None, None]:
     pool.close()
     pool.join()
     
-def pickle_handler(f):
-    return list(f())
-    
-
 if __name__ == '__main__': 
-    for line in get_subs():
-        print(line)
+    with open('subs.txt', 'a') as f:
+        for line in get_subs():
+            f.write(line)
+            f.write("\n")
 
