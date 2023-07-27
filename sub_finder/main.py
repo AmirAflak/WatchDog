@@ -3,7 +3,7 @@ import os
 import time
 from multiprocessing import Pool
 from typing import Generator
-from configs import DOMAIN
+from .configs import DOMAIN
 
 
 
