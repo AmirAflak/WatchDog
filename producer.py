@@ -14,9 +14,9 @@ class JsonProducer(KafkaProducer):
     def publish_stat(self, topic: str):
         while True:
             try:
-                subs = get_subs()
-                record = self.producer.send(topic=topic,  value=subs)
-                print('Record {} successfully produced at offset {}'.format(subs, record.get().offset))
+                for sub in get_subs():  
+                    record = self.producer.send(topic=topic,  value=sub)
+                    print('Record {} successfully produced at offset {}'.format(sub, record.get().offset))
             except KafkaTimeoutError as e:
                 print(e.__str__())
             time.sleep(2)          
