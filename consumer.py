@@ -1,7 +1,7 @@
 from typing import Dict, List
 import json
 from kafka import KafkaConsumer
-from settings import BOOTSTRAP_SERVERS, KAFKA_TOPIC
+from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC
 
 
 class JsonConsumer:
