@@ -4,7 +4,7 @@ import time
 from typing import List, Dict
 from kafka import KafkaProducer
 from kafka.errors import KafkaTimeoutError
-from sub_finder.main import get_subs
+from sub_finder.core import get_subs
 from settings import BOOTSTRAP_SERVERS, KAFKA_TOPIC
 
 class JsonProducer(KafkaProducer):
