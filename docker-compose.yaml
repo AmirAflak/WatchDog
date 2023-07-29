@@ -13,3 +13,20 @@ services:
     environment:
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  pgdatabase:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=root 
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=sub_domains
+    volumes:
+      - "./sub_domains_postgres_data:/var/lib/postgresql/data:rw"
+    ports:
+      - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - 8080:80
