@@ -1,4 +1,3 @@
-# docker exec -it kafka /bin/sh
 services:
   zookeeper:
     image: wurstmeister/zookeeper
@@ -30,3 +29,9 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - 8080:80
+  mongodb:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - ../mongo-data:/data/db
