@@ -1,7 +1,8 @@
 from typing import Dict, List
 import json
 from kafka import KafkaConsumer
-from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC
+from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC, MONGO_HOST, MONGO_PORT, MONGO_DB_NAME
+from mongodb import get_client, store_message
 
 
 class JsonConsumer:
@@ -10,8 +11,13 @@ class JsonConsumer:
 
     def consume_from_kafka(self, topics: List[str]):
         self.consumer.subscribe(topics)
+        
         print('Consuming from Kafka started')
         print('Available topics to consume: ', self.consumer.subscription())
+        
+        # Connect to mongoDB
+        session = get_client(MONGO_HOST, MONGO_PORT, MONGO_DB_NAME)
+        
         while True:
             try:
                 # maximum amount of time for new message = 1s
@@ -20,7 +26,10 @@ class JsonConsumer:
                     continue
                 for message_key, message_value in message.items():
                     for msg_val in message_value:
-                        print(msg_val.value)
+                        # print(msg_val.value)
+                        store_message(session=session,
+                                      message=msg_val.value,
+                                      collection_name='subdomains')
             except KeyboardInterrupt:
                 break
 
