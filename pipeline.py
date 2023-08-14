@@ -1,5 +1,6 @@
 from prefect import task, flow
 from sub_finder.core import get_subs
+from typing import List, Dict, Generator
 from producer import JsonProducer
 from consumer import JsonConsumer
 import datetime
@@ -36,6 +37,8 @@ def main():
     kafka_producer(subdomains)
     mongodb_consumer()
 
+if __name__ == '__main__':
+    main()
     
     
     
