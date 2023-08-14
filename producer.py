@@ -1,7 +1,7 @@
 import csv
 import json
 import time
-from typing import List, Dict
+from typing import List, Dict, Generator
 from kafka import KafkaProducer
 from kafka.errors import KafkaTimeoutError
 from sub_finder.core import get_subs
@@ -11,10 +11,10 @@ class JsonProducer(KafkaProducer):
     def __init__(self, props: Dict):
         self.producer = KafkaProducer(**props)
         
-    def publish_stat(self, topic: str):
+    def publish_stat(self,subs: Generator[str, None, None], topic: str):
         while True:
             try:
-                for sub in get_subs():  
+                for sub in subs:  
                     record = self.producer.send(topic=topic,  value=sub)
                     print('Record {} successfully produced at offset {}'.format(sub, record.get().offset))
             except KafkaTimeoutError as e:
@@ -28,4 +28,4 @@ if __name__ == '__main__':
         'value_serializer': lambda x: json.dumps(x).encode('utf-8')
     }
     producer = JsonProducer(props=config)
-    producer.publish_stat(topic=KAFKA_TOPIC)
+    producer.publish_stat(topic=KAFKA_TOPIC, subs=get_subs())
