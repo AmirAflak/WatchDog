@@ -1,1 +1,2 @@
 # docker exec -it kafka /bin/sh
+# docker stop $(docker ps -aq)
