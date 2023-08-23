@@ -32,9 +32,9 @@ class JsonConsumer:
                         
                         print(msg_val.value, formatted_timestamp)
                         store_message(session=session,
-                                      message={'subdomain': msg_val.value,
-                                               'fetched_time': formatted_timestamp},
-                                      collection_name='subdomains')
+                                    message={'subdomain': msg_val.value,
+                                            'fetched_time': formatted_timestamp},
+                                    collection_name='subdomains')
             except KeyboardInterrupt:
                 break
 
