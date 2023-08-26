@@ -2,7 +2,7 @@ from typing import Dict, List
 import json
 from datetime import datetime 
 from kafka import KafkaConsumer
-from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC, MONGO_HOST, MONGO_PORT, MONGO_DB_NAME
+from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC, MONGO_HOST, MONGO_PORT, MONGO_DB_NAME, DOMAIN
 
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
@@ -17,9 +17,22 @@ def process_batch(df, epoch_id):
     if not rdd.isEmpty():
     # Process each message in the RDD
         for row in rdd.collect():
-    # Example: assume each Kafka message is a JSON document
+    # Example: assume each Kafka messae is a JSON document
     # Insert the document into MongoDB
-            print(row.asDict())
+            record = row.asDict() 
+            print(record)
+            subdomain = record['value'].decode('utf-8')
+            timestamp = record['timestamp']
+            
+            #TODO Do scans 
+            
+            if collection.find({'subdomain': subdomain}).count() > 0:
+                continue
+            
+            client.store_message({'subdomain': subdomain,
+                           'domain': DOMAIN,
+                           'timestamp': timestamp}, 'subs')
+
     
 # Initialize Spark session
 spark = SparkSession.builder \
@@ -38,7 +51,7 @@ schema = StructType([
 
 # Set up the connection to MongoDB
 client = MongoDBClient(MONGO_HOST, MONGO_PORT, MONGO_DB_NAME, username='admin', password='password')
-
+collection = client['subs']
 
 # Read the Kafka messages as a DataFrame
 df = spark \
