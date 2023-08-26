@@ -12,7 +12,6 @@ class JsonProducer(KafkaProducer):
         self.producer = KafkaProducer(**props)
         
     def publish_stat(self,subs: Generator[str, None, None], topic: str):
-        while True:
             try:
                 for sub in subs:  
                     record = self.producer.send(topic=topic,  value=sub)
