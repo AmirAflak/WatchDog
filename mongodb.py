@@ -16,8 +16,8 @@ class MongoDBClient:
         self.client = MongoClient(f"mongodb://{username}:{password}@{host}:{port}/")
         self.db = self.client[db_name]
     
-    def store_message(self, session, message, collection_name):
-        session[collection_name].insert_one(message)
+    def store_message(self, message, collection_name):
+        self.client[collection_name].insert_one(message)
     
     def close(self):
         self.client.close()
