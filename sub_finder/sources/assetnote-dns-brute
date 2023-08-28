@@ -1,0 +1,7 @@
+#!/usr/bin/zsh
+
+assetnote_dns_brute () {
+        shuffledns -w ~/wordlist/assetnote-merged.txt -d $1 -r ~/.resolvers -m $(which massdns)
+}
+
+assetnote_dns_brute
