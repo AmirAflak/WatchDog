@@ -26,7 +26,7 @@ def process_batch(df, epoch_id):
             
             #TODO Do scans 
             
-            if collection.find({'subdomain': subdomain}).count() > 0:
+            if client.check_sub_existence(subdomain, 'subs'):
                 continue
             
             client.store_message({'subdomain': subdomain,

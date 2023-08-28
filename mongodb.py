@@ -7,6 +7,9 @@ class MongoDBClient:
         self.client = MongoClient(f"mongodb://{username}:{password}@{host}:{port}/")
         self.db = self.client[db_name]
     
+    def check_sub_existence(self, value, collection_name):
+        return self.db.get_collection(collection_name).count_documents({"subdomain": value}) > 0
+    
     def store_message(self, message, collection_name):
         self.db.get_collection(collection_name).insert_one(message)
         
