@@ -51,7 +51,6 @@ schema = StructType([
 
 # Set up the connection to MongoDB
 client = MongoDBClient(MONGO_HOST, MONGO_PORT, MONGO_DB_NAME, username='admin', password='password')
-collection = client['subs']
 
 # Read the Kafka messages as a DataFrame
 df = spark \
