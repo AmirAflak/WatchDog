@@ -8,16 +8,6 @@ from airflow.operators.dummy import DummyOperator
 
 from datetime import datetime, timedelta
 
-# from mongodb_consumer import JsonConsumer
-# from producer import JsonProducer
-
-
-# producer_path = os.path.abspath('/home/mehrdad/watchdog/producer.py')
-# sys.path.append(producer_path)
-
-# consumer_path = os.path.abspath('/home/mehrdad/watchdog/mongodb_consumer.py')
-# sys.path.append(consumer_path)
-
 with DAG(
     dag_id=f"subdomain_finder_flow",
     start_date=datetime(2023,7,28),
