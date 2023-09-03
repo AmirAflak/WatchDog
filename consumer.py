@@ -31,14 +31,20 @@ def process_batch(df, epoch_id):
     # Example: assume each Kafka messae is a JSON document
     # Insert the document into MongoDB
             record = row.asDict() 
-            print(record)
+            # print(record)
             subdomain = record['value'].decode('utf-8')
             timestamp = record['timestamp']
             
             #TODO Do scans 
             
+            start_time = time.time()
+            
             if client.check_sub_existence(subdomain, 'subs'):
                 continue
+            
+            elapsed_time = time.time() - start_time
+            # Time taken to check "www.visitcaterpillar.com" existence: 0.0010235309600830078 seconds
+            print(f"Time taken to check {subdomain} existence: {elapsed_time} seconds")
             
             client.store_message({'subdomain': subdomain,
                            'domain': DOMAIN,
@@ -65,6 +71,10 @@ client = MongoDBClient(MONGO_HOST, MONGO_PORT, MONGO_DB_NAME, username='admin', 
 
 # Wait for the 'subs' topic to be available
 wait_for_topic('subs')
+
+# Create an index on the 'subdomain' field in the 'subs' collection
+client.create_index('subdomain', 'subs')
+
 
 # Read the Kafka messages as a DataFrame
 df = spark \
