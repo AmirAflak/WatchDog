@@ -13,5 +13,8 @@ class MongoDBClient:
     def store_message(self, message, collection_name):
         self.db.get_collection(collection_name).insert_one(message)
         
+    def create_index(self, field_name, collection_name):
+        self.db.collection_name.create_index(field_name)
+        
     def close(self):
         self.client.close()

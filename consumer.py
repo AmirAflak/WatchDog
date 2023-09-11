@@ -1,5 +1,6 @@
 from typing import Dict, List
 import json
+import time
 from datetime import datetime 
 from kafka import KafkaConsumer
 from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC, MONGO_HOST, MONGO_PORT, MONGO_DB_NAME, DOMAIN
@@ -8,6 +9,16 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
 from mongodb import MongoDBClient
+
+def wait_for_topic(topic):
+    consumer = KafkaConsumer(bootstrap_servers=BOOTSTRAP_SERVERS)
+    available_topics = set(consumer.topics())
+
+    while topic not in available_topics:
+        time.sleep(1)
+        available_topics = set(consumer.topics())
+
+    consumer.close()
 
 
 def process_batch(df, epoch_id):
@@ -20,14 +31,20 @@ def process_batch(df, epoch_id):
     # Example: assume each Kafka messae is a JSON document
     # Insert the document into MongoDB
             record = row.asDict() 
-            print(record)
+            # print(record)
             subdomain = record['value'].decode('utf-8')
             timestamp = record['timestamp']
             
             #TODO Do scans 
             
+            start_time = time.time()
+            
             if client.check_sub_existence(subdomain, 'subs'):
                 continue
+            
+            elapsed_time = time.time() - start_time
+            # Time taken to check "www.visitcaterpillar.com" existence: 0.0010235309600830078 seconds
+            print(f"Time taken to check {subdomain} existence: {elapsed_time} seconds")
             
             client.store_message({'subdomain': subdomain,
                            'domain': DOMAIN,
@@ -51,6 +68,13 @@ schema = StructType([
 
 # Set up the connection to MongoDB
 client = MongoDBClient(MONGO_HOST, MONGO_PORT, MONGO_DB_NAME, username='admin', password='password')
+
+# Wait for the 'subs' topic to be available
+wait_for_topic('subs')
+
+# Create an index on the 'subdomain' field in the 'subs' collection
+client.create_index('subdomain', 'subs')
+
 
 # Read the Kafka messages as a DataFrame
 df = spark \
