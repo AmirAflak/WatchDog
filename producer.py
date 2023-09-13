@@ -5,7 +5,7 @@ from typing import List, Dict, Generator
 from kafka import KafkaProducer
 from kafka.errors import KafkaTimeoutError
 from sub_finder.core import get_subs
-from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC
+from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC, TARGETS
 
 class JsonProducer(KafkaProducer):
     def __init__(self, props: Dict):
@@ -18,13 +18,18 @@ class JsonProducer(KafkaProducer):
                     print('Record {} successfully produced at offset {}'.format(sub, record.get().offset))
             except KafkaTimeoutError as e:
                 print(e.__str__())
-            time.sleep(2)          
+            time.sleep(2)       
             
-if __name__ == '__main__':
-    # Config Should match with the KafkaProducer expectation
+def run_producer(target: str):
     config = {
         'bootstrap_servers': BOOTSTRAP_SERVERS,
         'value_serializer': lambda x: json.dumps(x).encode('utf-8')
     }
     producer = JsonProducer(props=config)
-    producer.publish_stat(topic=KAFKA_TOPIC, subs=get_subs())
+    producer.publish_stat(topic=KAFKA_TOPIC, subs=get_subs(target))   
+    
+if __name__ == '__main__':
+
+    for target in TARGETS:
+        run_producer(target)
+            

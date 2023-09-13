@@ -3,7 +3,8 @@ import json
 import time
 from datetime import datetime 
 from kafka import KafkaConsumer
-from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC, MONGO_HOST, MONGO_PORT, MONGO_DB_NAME, DOMAIN
+from urllib.parse import urlparse
+from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC, MONGO_HOST, MONGO_PORT, MONGO_DB_NAME
 
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
@@ -33,6 +34,18 @@ def process_batch(df, epoch_id):
             record = row.asDict() 
             # print(record)
             subdomain = record['value'].decode('utf-8')
+            
+            if subdomain is None:
+                continue
+            
+            parsed_url = urlparse(subdomain)
+            
+            try:
+                domain = parsed_url.netloc.split('.')[-2] + '.' + parsed_url.netloc.split('.')[-1]
+            except Exception as ex:
+                print(subdomain)
+                print(ex)
+            
             timestamp = record['timestamp']
             
             #TODO Do scans 
@@ -47,7 +60,7 @@ def process_batch(df, epoch_id):
             print(f"Time taken to check {subdomain} existence: {elapsed_time} seconds")
             
             client.store_message({'subdomain': subdomain,
-                           'domain': DOMAIN,
+                           'domain': domain,
                            'timestamp': timestamp}, 'subs')
 
     
