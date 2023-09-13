@@ -11,10 +11,10 @@ class JsonProducer(KafkaProducer):
     def __init__(self, props: Dict):
         self.producer = KafkaProducer(**props)
         
-    def publish_stat(self,subs: Generator[str, None, None], topic: str):
+    def publish_stat(self,subs: Generator[str, None, None], topic: str, target: str):
             try:
                 for sub in subs:  
-                    record = self.producer.send(topic=topic,  value=sub)
+                    record = self.producer.send(topic=topic,  value=(sub, target))
                     print('Record {} successfully produced at offset {}'.format(sub, record.get().offset))
             except KafkaTimeoutError as e:
                 print(e.__str__())
@@ -26,7 +26,7 @@ def run_producer(target: str):
         'value_serializer': lambda x: json.dumps(x).encode('utf-8')
     }
     producer = JsonProducer(props=config)
-    producer.publish_stat(topic=KAFKA_TOPIC, subs=get_subs(target))   
+    producer.publish_stat(topic=KAFKA_TOPIC, subs=get_subs(target), target=target)   
     
 if __name__ == '__main__':
 

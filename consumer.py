@@ -32,36 +32,27 @@ def process_batch(df, epoch_id):
     # Example: assume each Kafka messae is a JSON document
     # Insert the document into MongoDB
             record = row.asDict() 
-            # print(record)
-            subdomain = record['value'].decode('utf-8')
+            # print(record['value'].decode('utf-8'))
+            subdomain = record['value'].decode('utf-8')[0]
             
-            if subdomain is None:
+            if (not subdomain) or (client.check_sub_existence(subdomain, 'subs')):
+                print(f'Record {subdomain} is not valid or it exists')
                 continue
             
-            parsed_url = urlparse(subdomain)
-            
-            try:
-                domain = parsed_url.netloc.split('.')[-2] + '.' + parsed_url.netloc.split('.')[-1]
-            except Exception as ex:
-                print(subdomain)
-                print(ex)
+            domain = record['value'].decode('utf-8')[1]
             
             timestamp = record['timestamp']
-            
+        
             #TODO Do scans 
             
-            start_time = time.time()
-            
-            if client.check_sub_existence(subdomain, 'subs'):
-                continue
-            
-            elapsed_time = time.time() - start_time
-            # Time taken to check "www.visitcaterpillar.com" existence: 0.0010235309600830078 seconds
-            print(f"Time taken to check {subdomain} existence: {elapsed_time} seconds")
-            
+        
+            # if client.check_sub_existence(subdomain, 'subs'):
+            #     continue
+        
             client.store_message({'subdomain': subdomain,
-                           'domain': domain,
-                           'timestamp': timestamp}, 'subs')
+                        'domain': domain,
+                        'timestamp': timestamp}, 'subs')
+            print(f'Record {subdomain, domain, timestamp} inserted to DB')
 
     
 # Initialize Spark session
@@ -83,7 +74,7 @@ schema = StructType([
 client = MongoDBClient(MONGO_HOST, MONGO_PORT, MONGO_DB_NAME, username='admin', password='password')
 
 # Wait for the 'subs' topic to be available
-wait_for_topic('subs')
+wait_for_topic(KAFKA_TOPIC)
 
 # Create an index on the 'subdomain' field in the 'subs' collection
 client.create_index('subdomain', 'subs')
@@ -95,7 +86,7 @@ df = spark \
     .format("kafka") \
     .option("kafka.bootstrap.servers", "localhost:9092") \
     .option("startingOffsets", "earliest") \
-    .option("subscribe", "subs") \
+    .option("subscribe", KAFKA_TOPIC) \
     .load()
 
 # Start the streaming query
