@@ -1,6 +1,7 @@
 from typing import Dict, List
 import json
 import time
+import ast
 from datetime import datetime 
 from kafka import KafkaConsumer
 from urllib.parse import urlparse
@@ -31,15 +32,17 @@ def process_batch(df, epoch_id):
         for row in rdd.collect():
     # Example: assume each Kafka messae is a JSON document
     # Insert the document into MongoDB
-            record = row.asDict() 
-            # print(record['value'].decode('utf-8'))
-            subdomain = record['value'].decode('utf-8')[0]
+            record = row.asDict()
+            
+            # Decode value field to original format (List):
+            value = ast.literal_eval(record['value'].decode('utf-8'))
+            
+            subdomain = value[0]
             
             if (not subdomain) or (client.check_sub_existence(subdomain, 'subs')):
-                print(f'Record {subdomain} is not valid or it exists')
                 continue
             
-            domain = record['value'].decode('utf-8')[1]
+            domain = value[1]
             
             timestamp = record['timestamp']
         
@@ -52,7 +55,6 @@ def process_batch(df, epoch_id):
             client.store_message({'subdomain': subdomain,
                         'domain': domain,
                         'timestamp': timestamp}, 'subs')
-            print(f'Record {subdomain, domain, timestamp} inserted to DB')
 
     
 # Initialize Spark session
