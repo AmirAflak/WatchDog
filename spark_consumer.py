@@ -3,8 +3,9 @@ import json
 import time
 import ast
 from datetime import datetime 
-from scans.name_resolution import check_domain_ip
-from notification.telegram import new_subdomain
+from utils.scans.name_resolution import check_domain_ip
+from utils.notification.telegram import new_subdomain
+from utils.mongodb import MongoDBClient
 from kafka import KafkaConsumer
 from urllib.parse import urlparse
 from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC, MONGO_HOST, MONGO_PORT, MONGO_DB_NAME
@@ -12,7 +13,6 @@ from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC, MONGO_HOST, MONGO_PORT, MONG
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
-from mongodb import MongoDBClient
 
 def wait_for_topic(topic):
     consumer = KafkaConsumer(bootstrap_servers=BOOTSTRAP_SERVERS)
@@ -46,7 +46,7 @@ def process_batch(df, epoch_id):
                 continue
             
             # alert for new subdomain
-            new_subdomain(subdomain)
+            # new_subdomain(subdomain)
             
             domain = value[1]
             
