@@ -11,7 +11,7 @@ class MongoDBClient:
         return self.db.get_collection(collection_name).count_documents({"subdomain": value}) > 0
     
     def store_message(self, message, collection_name):
-        self.db.get_collection(collection_name).insert_one(message)
+        self.db.get_collection(collection_name).update_one(message, {'$set':message} ,upsert=True)
         
     def create_index(self, field_name, collection_name):
         self.db.collection_name.create_index(field_name)
