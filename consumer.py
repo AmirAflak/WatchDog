@@ -3,6 +3,7 @@ import json
 import time
 import ast
 from datetime import datetime 
+from scans.name_resolution import check_domain_ip
 from kafka import KafkaConsumer
 from urllib.parse import urlparse
 from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC, MONGO_HOST, MONGO_PORT, MONGO_DB_NAME
@@ -29,6 +30,7 @@ def process_batch(df, epoch_id):
         rdd = df.rdd
     if not rdd.isEmpty():
     # Process each message in the RDD
+        data = {}
         for row in rdd.collect():
     # Example: assume each Kafka messae is a JSON document
     # Insert the document into MongoDB
@@ -45,16 +47,23 @@ def process_batch(df, epoch_id):
             domain = value[1]
             
             timestamp = record['timestamp']
+            
+            data['subdomain'] = subdomain
+            data['domain'] = domain
+            data['timestamp'] = timestamp
         
             #TODO Do scans 
             
+            has_ip, ip_address = check_domain_ip(subdomain)
+            
+            if ip_address:
+                data['ip_address'] = ip_address
+                
         
             # if client.check_sub_existence(subdomain, 'subs'):
             #     continue
         
-            client.store_message({'subdomain': subdomain,
-                        'domain': domain,
-                        'timestamp': timestamp}, 'subs')
+            client.store_message(data, 'subs')
 
     
 # Initialize Spark session
