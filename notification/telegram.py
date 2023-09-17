@@ -24,5 +24,5 @@ def latest_asset(latest_ass):
     response = requests.post(apiURL, json={'chat_id': -1001612767860, 'text': msg})
 
 def Change_Service(change_serv):
-    msg = f"[+] Change Servicee: {change_serv}"
+    msg = f"[+] Change Service: {change_serv}"
     response = requests.post(apiURL, json={'chat_id': -1001612767860, 'text':msg})
