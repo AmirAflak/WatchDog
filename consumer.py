@@ -4,6 +4,7 @@ import time
 import ast
 from datetime import datetime 
 from scans.name_resolution import check_domain_ip
+from notification.telegram import new_subdomain
 from kafka import KafkaConsumer
 from urllib.parse import urlparse
 from configs import BOOTSTRAP_SERVERS, KAFKA_TOPIC, MONGO_HOST, MONGO_PORT, MONGO_DB_NAME
@@ -43,6 +44,9 @@ def process_batch(df, epoch_id):
             
             if (not subdomain) or (client.check_sub_existence(subdomain, 'subs')):
                 continue
+            
+            # alert for new subdomain
+            new_subdomain(subdomain)
             
             domain = value[1]
             
