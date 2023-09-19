@@ -43,11 +43,11 @@
 Watchdog is a powerful ETL pipeline designed to track subdomains of specified domains. It employs multiprocessing for efficient subdomain generation, Kafka for seamless streaming, MongoDB for scalable storage, PySpark for advanced subdomain processing, and Airflow for robust orchestration.
 
 ## Features
-* Efficient Subdomain Generation: Watchdog leverages multiprocessing to generate subdomains quickly and accurately, optimizing performance.
-* Real-time Streaming: The pipeline integrates Kafka to provide seamless and reliable data streaming, ensuring up-to-date information.
-* Scalable Storage: Watchdog utilizes MongoDB as its storage solution, enabling flexible and scalable management of subdomains.
-* Advanced Subdomain Processing: With the power of PySpark, Watchdog efficiently processes and analyzes subdomains, allowing for sophisticated data manipulation.
-* Robust Orchestration: Watchdog employs Airflow for effective workflow management and task coordination, ensuring smooth execution.
+* <b>Efficient Subdomain Generation:</b> Watchdog leverages multiprocessing to generate subdomains quickly and accurately, optimizing performance.
+* <b>Real-time Streaming:</b> The pipeline integrates Kafka to provide seamless and reliable data streaming, ensuring up-to-date information.
+* <b>Scalable Storage:</b> Watchdog utilizes MongoDB as its storage solution, enabling flexible and scalable management of subdomains.
+* <b>Advanced Subdomain Processing:</b> With the power of PySpark, Watchdog efficiently processes and analyzes subdomains, allowing for sophisticated data manipulation.
+* <b>Robust Orchestration:</b> Watchdog employs Airflow for effective workflow management and task coordination, ensuring smooth execution.
 
 ### Built With
 * [Apache Airflow](https://airflow.apache.org/) - Workflow management and task scheduling.
