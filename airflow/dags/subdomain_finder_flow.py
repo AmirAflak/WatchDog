@@ -25,7 +25,7 @@ with DAG(
     
     t1 = BashOperator(
         task_id='kafka_producer',
-        bash_command='/home/mehrdad/watchdog/airflow/dags/run_producer.sh ',
+        bash_command='/home/mehrdad/WatchDog/airflow/dags/run_producer.sh ',
     )
     
     t0 >> t1
