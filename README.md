@@ -62,19 +62,19 @@ Watchdog is a powerful ETL pipeline designed to track subdomains of specified do
 ## Usage
 
 Here are some screenshots of the work flow, you can monitor subdomains explicitly visualize them in airflow or mongoDB with related url + ports.
-* <b>Kafka producer:</b> sends subdomains to the specified Kafka topic.
+* <b>Kafka producer:</b> sends subdomains to the specified Kafka topic.<br />
   <a href="[https://github.com/AmirAflak/WatchDog">
     <img src="images/producer.jpg" alt="Logo" width="600" height="300">
   </a>
-* <b>Kafka consumer:</b> Spark Streaming consumer to consume subdomains and store them in MongoDB.
+* <b>Kafka consumer:</b> Spark Streaming consumer to consume subdomains and store them in MongoDB.<br />
   <a href="[https://github.com/AmirAflak/WatchDog">
     <img src="images/consumer.jpg" alt="Logo" width="600" height="300">
   </a>
-* <b>Kafka consumer:</b> Checking the MongoDB collection snapshot to see the subdomains that have been tracked.
+* <b>Kafka consumer:</b> Checking the MongoDB collection snapshot to see the subdomains that have been tracked.<br />
   <a href="[https://github.com/AmirAflak/WatchDog">
     <img src="images/MongoDB.jpg" alt="Logo" width="600" height="300">
   </a>
-* <b>Airflow:</b> The Airflow DAG logs show the status and progress of the ETL pipeline.
+* <b>Airflow:</b> The Airflow DAG logs show the status and progress of the ETL pipeline.<br />
   <a href="[https://github.com/AmirAflak/WatchDog">
     <img src="images/airflow.jpg" alt="Logo" width="600" height="300">
   </a>
