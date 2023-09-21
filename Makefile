@@ -18,9 +18,6 @@ webserver:
 stop:
 	cd docker && docker-compose down 
 
-purge:
-	docker stop $(docker ps -aq)
-
 
 
 
