@@ -56,38 +56,68 @@ Watchdog is a powerful ETL pipeline designed to track subdomains of specified do
 * [MongoDB](https://www.mongodb.com/) - Scalable NoSQL database.
   
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
+This is an example of how you may give instructions on setting up your WatchDog locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
+Before you can use this project, you'll need to have the following installed on your machine:
+* Python above 3.10
+* Docker
+* Docker Compose
+* Airflow
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+If you don't have these installed, you can follow the installation instructions for each tool:
+* [Install Docker](https://docs.docker.com/get-docker/)
+* [Install Docker Compose](https://docs.docker.com/compose/install/)
+* [Install Airflow](https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html)
+
+Once you have these tools installed, you'll be ready to use this project.
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+1. Clone the repo
+   ```sh
+   git clone https://github.com/AmirAflak/WatchDog.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd WatchDog/
+   ```
+3. Set targets in configs.py:
+   ```py
+   TARGETS=['caterpillar.com', 'url.com']
+   ```
+4. Install the required packages:
+   ```sh
+   make install
+   ``` 
+5. Initialize Docker Compose:
+   ```sh
+   make docker
+   ```
+6. Initialize the Spark streaming consumer:
+   ```sh
+   make consumer
+   ```
+7. Initialize the Airflow scheduler:
+   ```sh
+   make scheduler
+   ```
+8. Initialize the Airflow webserver GUI:
+   ```sh
+   make webserver
+   ```
+9. To stop the Docker Compose containers, run:
+   ```sh
+   make stop
+   ```
+That's it! You should now be able to use the project.
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
