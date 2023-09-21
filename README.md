@@ -26,7 +26,7 @@
 <br />
 <div align="center">
   <a href="[https://github.com/AmirAflak/WatchDog">
-    <img src="images/logo.jpeg" alt="Logo" width="80" height="80">
+    <img src="images/logo.jpeg" alt="Logo" width="200" height="200">
   </a>
 
   <h3 align="center">WatchDog</h3>
@@ -57,6 +57,31 @@ Watchdog is a powerful ETL pipeline designed to track subdomains of specified do
   
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- USAGE EXAMPLES -->
+## Usage
+
+Here are some screenshots of the work flow, you can monitor subdomains explicitly visualize them in airflow or mongoDB with related url + ports.
+* <b>Kafka producer:</b> sends subdomains to the specified Kafka topic.
+  <a href="[https://github.com/AmirAflak/WatchDog">
+    <img src="images/producer.jpg" alt="Logo" width="600" height="300">
+  </a>
+* <b>Kafka consumer:</b> Spark Streaming consumer to consume subdomains and store them in MongoDB.
+  <a href="[https://github.com/AmirAflak/WatchDog">
+    <img src="images/consumer.jpg" alt="Logo" width="600" height="300">
+  </a>
+* <b>Kafka consumer:</b> Checking the MongoDB collection snapshot to see the subdomains that have been tracked.
+  <a href="[https://github.com/AmirAflak/WatchDog">
+    <img src="images/MongoDB.jpg" alt="Logo" width="600" height="300">
+  </a>
+* <b>Airflow:</b> The Airflow DAG logs show the status and progress of the ETL pipeline.
+  <a href="[https://github.com/AmirAflak/WatchDog">
+    <img src="images/airflow.jpg" alt="Logo" width="600" height="300">
+  </a>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -120,18 +145,6 @@ That's it! You should now be able to use the project.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 
