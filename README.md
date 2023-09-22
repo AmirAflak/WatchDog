@@ -40,14 +40,15 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-Watchdog is a powerful ETL pipeline designed to track subdomains of specified domains. It employs multiprocessing for efficient subdomain generation, Kafka for seamless streaming, MongoDB for scalable storage, PySpark for advanced subdomain processing, and Airflow for robust orchestration.
+Watchdog is a powerful ETL pipeline designed to track subdomains of specified domains in real-time. The goal of this project is to identify new subdomains as soon as they are discovered and alert the user immediately. This is achieved through efficient subdomain generation using multiprocessing, seamless and reliable data streaming with Kafka, flexible and scalable management of subdomains with MongoDB, advanced subdomain processing with PySpark, and effective workflow management and task coordination with Airflow. With the addition of the Telegram Notification feature, Watchdog provides real-time alerts and quick response to potential security threats. This project is ideal for security professionals, system administrators, and anyone who needs to monitor subdomains of specified domains in real-time.
 
 ## Features
 * <b>Efficient Subdomain Generation:</b> Watchdog leverages multiprocessing to generate subdomains quickly and accurately, optimizing performance.
 * <b>Real-time Streaming:</b> The pipeline integrates Kafka to provide seamless and reliable data streaming, ensuring up-to-date information.
 * <b>Scalable Storage:</b> Watchdog utilizes MongoDB as its storage solution, enabling flexible and scalable management of subdomains.
-* <b>Advanced Subdomain Processing:</b> With the power of PySpark, Watchdog efficiently processes and analyzes subdomains, allowing for sophisticated data manipulation.
+* <b>Advanced Subdomain Processing and Security Scanning:</b> With the power of PySpark, Watchdog efficiently processes and analyzes subdomains, allowing for sophisticated data manipulation.Watchdog also offers a powerful subdomain scanning capability, This feature also allows for a more comprehensive understanding of the subdomains and their associated IP addresses, which can be useful for identifying potential security threats.
 * <b>Robust Orchestration:</b> Watchdog employs Airflow for effective workflow management and task coordination, ensuring smooth execution.
+* <b>Telegram Notification:</b> Watchdog supports sending notifications to a Telegram channel or group when a new subdomain is found. This feature allows for real-time alerts and quick response to potential security threats.
 
 ### Built With
 * [Apache Airflow](https://airflow.apache.org/) - Workflow management and task scheduling.
@@ -59,9 +60,7 @@ Watchdog is a powerful ETL pipeline designed to track subdomains of specified do
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
-## Usage
-
-Here are some screenshots of the work flow, you can monitor subdomains explicitly visualize them in airflow or mongoDB with related url + ports.
+## Screenshots
 * <b>Kafka producer:</b> sends subdomains to the specified Kafka topic.<br />
   <a href="[https://github.com/AmirAflak/WatchDog">
     <img src="images/producer.jpg" alt="Logo" width="600" height="300">
@@ -70,7 +69,7 @@ Here are some screenshots of the work flow, you can monitor subdomains explicitl
   <a href="[https://github.com/AmirAflak/WatchDog">
     <img src="images/consumer.jpg" alt="Logo" width="600" height="300">
   </a>
-* <b>Kafka consumer:</b> Checking the MongoDB collection snapshot to see the subdomains that have been tracked.<br />
+* <b>MongoDB:</b> Checking the MongoDB collection snapshot to see the subdomains that have been tracked.<br />
   <a href="[https://github.com/AmirAflak/WatchDog">
     <img src="images/MongoDB.jpg" alt="Logo" width="600" height="300">
   </a>
@@ -103,7 +102,7 @@ If you don't have these installed, you can follow the installation instructions 
 
 Once you have these tools installed, you'll be ready to use this project.
 
-### Installation
+### Installation & Usage
 
 1. Clone the repo
    ```sh
